@@ -78,7 +78,8 @@ jobs:
     name: Build and Test watchOS
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
-      runsonlabels: '["macOS", "self-hosted"]'
+      #runsonlabels: '["macOS", "self-hosted"]'
+      runs-on: macOS-latest
       path: 'Tests/UITests'
       scheme: TestAppWatchApp
       destination: 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)'
@@ -88,7 +89,8 @@ jobs:
     name: Build and Test visionOS
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
-      runsonlabels: '["macOS", "self-hosted"]'
+      #runsonlabels: '["macOS", "self-hosted"]'
+      runs-on: macOS-latest
       path: 'Tests/UITests'
       scheme: TestApp
       destination: 'platform=visionOS Simulator,name=Apple Vision Pro'
