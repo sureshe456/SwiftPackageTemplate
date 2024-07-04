@@ -35,7 +35,7 @@ jobs:
     uses: ./.github/workflows/xcodebuild-or-fastlane.yml
     with:
       #runsonlabels: '["macOS", "self-hosted"]'
-      runs-on: macos-latest
+      #runs-on: macos-latest
       path: 'Tests/UITests'
       scheme: TestApp
       destination: 'platform=visionOS Simulator,name=Apple Vision Pro'
