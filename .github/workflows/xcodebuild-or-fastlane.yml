@@ -17,7 +17,8 @@ on:
         required: false
         type: string
         default: '.'
-      runsonlabels:
+      #runsonlabels:
+      runs-on:
         description: |
           JSON-based collection of labels indicating which type of github runner should be chosen.
         required: false
@@ -196,7 +197,8 @@ on:
 jobs:
   build_and_test:
     name: Test using xcodebuild or run fastlane
-    runs-on: ${{ fromJson(inputs.runsonlabels) }}
+    #runs-on: ${{ fromJson(inputs.runsonlabels) }}
+    runs-on: ${{ fromJson(inputs) }}
     defaults:
       run:
         working-directory: ${{ inputs.path }}
