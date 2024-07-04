@@ -1,0 +1,15 @@
+name: REUSE Compliance
+
+on: [push, pull_request]
+
+jobs:
+  reuse:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up REUSE
+      run: |
+        pip install reuse
+    - name: Run REUSE lint
+      run: reuse lint
