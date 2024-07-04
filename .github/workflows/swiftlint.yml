@@ -1,15 +1,25 @@
+#
+# This source file is part of the Stanford Biodesign Digital Health Group open-source organization
+#
+# SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
+#
+# SPDX-License-Identifier: MIT
+#
+
 name: SwiftLint
 
-on: [push, pull_request]
+on:
+  workflow_call:
 
 jobs:
-  lint:
-    runs-on: macos-latest
-
+  swiftlint:
+    name: SwiftLint
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up SwiftLint
-      run: |
-        brew install swiftlint
-    - name: Run SwiftLint
-      run: swiftlint
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: SwiftLint
+        uses: stanfordbdhg/action-swiftlint@v4
+        with:
+          args: --strict
