@@ -198,7 +198,7 @@ jobs:
   build_and_test:
     name: Test using xcodebuild or run fastlane
     #runs-on: ${{ fromJson(inputs.runsonlabels) }}
-    runs-on: ${{ fromJson(inputs.runs-on) }}
+    runs-on: ${{ fromJson(inputs.scheme) }}
     defaults:
       run:
         working-directory: ${{ inputs.path }}
