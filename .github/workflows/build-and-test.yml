@@ -9,7 +9,8 @@
 name: Build and Test
 
 on:
-  workflow_call:
+  #workflow_call:
+  push
 
 jobs:
   reuse_action:
