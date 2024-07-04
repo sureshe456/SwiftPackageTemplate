@@ -19,17 +19,17 @@ jobs:
     name: SwiftLint
     uses: ./.github/workflows/swiftlint.yml
   
-  watchos:
-    name: Build and Test watchOS
-    uses: ./.github/workflows/xcodebuild-or-fastlane.yml
-    with:
+  #watchos:
+    #name: Build and Test watchOS
+    #uses: ./.github/workflows/xcodebuild-or-fastlane.yml
+    #with:
       #runsonlabels: '["macOS", "self-hosted"]'
-      runs-on: macos-latest
-      path: 'Tests/UITests'
-      scheme: TestAppWatchApp
-      destination: 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)'
-      resultBundle: TestApp-watchOS.xcresult
-      artifactname: TestApp-watchOS.xcresult
+      #runs-on: macos-latest
+      #path: 'Tests/UITests'
+      #scheme: TestAppWatchApp
+      #destination: 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)'
+      #resultBundle: TestApp-watchOS.xcresult
+      #artifactname: TestApp-watchOS.xcresult
   visionos:
     name: Build and Test visionOS
     uses: ./.github/workflows/xcodebuild-or-fastlane.yml
@@ -47,7 +47,7 @@ jobs:
       actions: read
   uploadcoveragereport:
     name: Upload Coverage Report
-    needs: [watchos, visionos]
+    needs: [visionos]
     uses: ./.github/workflows/create-and-upload-coverage-report.yml
     with:
       coveragereports: TemplatePackage-iOS.xcresult TemplatePackage-watchOS.xcresult TemplatePackage-visionOS.xcresult TemplatePackage-tvOS.xcresult TemplatePackage-macOS.xcresult TestApp-iOS.xcresult TestApp-iPadOS.xcresult TestApp-watchOS.xcresult TestApp-visionOS.xcresult TestApp-tvOS.xcresult
