@@ -1,0 +1,60 @@
+#
+# This source file is part of the TemplatePackage open source project
+#
+# SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
+#
+# SPDX-License-Identifier: MIT
+#
+
+name: Build and Tes
+
+on:
+  push
+
+jobs:
+  reuse_action:
+    name: REUSE Compliance Check
+    uses: StanfordBDHG/.github/.github/workflows/reuse.yml@v2
+  swiftlint:
+    name: SwiftLint
+    uses: StanfordBDHG/.github/.github/workflows/swiftlint.yml@v2  
+  watchos:
+    name: Build and Test watchOS
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    with:
+      #runsonlabels: '["macOS", "self-hosted"]'
+      runs-on: macos-latest
+      path: 'Tests/UITests'
+      scheme: TestAppWatchApp
+      destination: 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)'
+      resultBundle: TestApp-watchOS.xcresult
+      artifactname: TestApp-watchOS.xcresult
+  visionos:
+    name: Build and Test visionOS
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    with:
+      #runsonlabels: '["macOS", "self-hosted"]'
+      runs-on: macos-latest
+      path: 'Tests/UITests'
+      scheme: TestApp
+      destination: 'platform=visionOS Simulator,name=Apple Vision Pro'
+      resultBundle: TestApp-visionOS.xcresult
+      artifactname: TestApp-visionOS.xcresult
+  codeql:
+    name: CodeQL
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    with:
+      codeql: true
+      test: false
+      scheme: TemplatePackage
+    permissions:
+      security-events: write
+      actions: read
+  uploadcoveragereport:
+    name: Upload Coverage Report
+    needs: [packageios, packagewatchos, packagevisionos, packagetvos, packagemacos, ios, ipados, watchos, visionos, tvos]
+    uses: StanfordBDHG/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
+    with:
+      coveragereports: TemplatePackage-iOS.xcresult TemplatePackage-watchOS.xcresult TemplatePackage-visionOS.xcresult TemplatePackage-tvOS.xcresult TemplatePackage-macOS.xcresult TestApp-iOS.xcresult TestApp-iPadOS.xcresult TestApp-watchOS.xcresult TestApp-visionOS.xcresult TestApp-tvOS.xcresult
+    secrets:
+      token: ${{ secrets.CODECOV_TOKEN }}
